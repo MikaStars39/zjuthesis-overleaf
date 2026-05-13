@@ -1,0 +1,25 @@
+\cleardoublepage{}
+\begin{center}
+    \bfseries \zihao{3} 摘~要
+\end{center}
+
+近年来，人们注意到一个有趣的现象，GPT-4、Claude 3.5、Llama 3 等前沿大语言模型(LLM)在回答"9.11 和 9.9， 哪个更大"这种最简单的小数比较问题时，会稳定地给出错误答案。这种错误模式和儿童数学认知研究中早已观察到的"自然数偏差"(Natural Number Bias, NNB)非常相似——小学高年级和初中学生也会倾向于认为 0.25 比 0.8 大，因为 25 比 8 大。本文想要回答的核心问题是：人机之间的这种表现相似性，只是一种表面巧合，还是两种系统在机制层面的某种共性？
+
+为了回答这个问题，本文在不收集任何新的人类数据的前提下，镜像复现了 Desmet 等人(2010)和 Alonso-Díaz 等人(2018)两项已发表的人类研究，并补充构建了一个针对 LLM 特有现象的图式干扰扩展集(D-SCHEMA)。我们在 7 个主流 LLM 上做了行为层面的对照实验，并以 Gemma-2-9B 为核心模型，结合线性探针、Gemma Scope 预训练稀疏自编码器(SAE)和激活补丁三种方法，直接观察模型内部的表征竞争。主要结论有四点：第一，儿童在小数比较任务上所犯错误的分类方法，同样可以用来描述LLM 在该任务上的错误，每个模型都能稳定对应到 G3–G6 的某个年级：Llama-3.2-3B 行为最接近三年级学生，GPT-4o 和 Claude 3.5 Sonnet 接近六年级水平。第二，LLM 和人类的自然数偏差出现位置不同：人类在小数和比率两类任务上都表现出一致的 自然数偏差，而 LLM 只在小数任务上表现出明显自然数偏差，在比率任务上则几乎没有表现出偏差。这说明 LLM 的"NNB"主要发生在符号操作层面(token 字面值比较)，而不是概念层面的整体量级混淆。第三，机制探测直接捕捉到了模型内部的图式竞争信号：在 Gemma-2-9B 第 18 层，我们提出的图式竞争指数(SCI)与题目正确率的 Spearman 相关系数为 −0.61，在该层做激活补丁可以翻转 47\% 的错误答案。
+
+LLM 的数字偏差具有可以用发展心理学的语言精确刻画的结构，但其底层机制和人类的并不相同。我们讨论了这一结果对概念转变理论、可解释性方法和模型对齐工作的意义，并认为相比于提示工程或 RLHF，在中间层做激活引导(activation steering)可能是一条更可控、更可解释的偏差消除路径。
+
+\par \noindent \textbf{关键字：}自然数偏差、大语言模型、机制可解释性、小数比较、图式竞争
+
+\cleardoublepage{}
+\begin{center}
+    \bfseries \zihao{3} Abstract
+\end{center}
+
+Recent observations have shown that frontier large language models consistently fail on simple decimal comparison questions such as "which is bigger, 9.11 or 9.9." This kind of error is strikingly similar to a well-documented phenomenon in children called natural number bias (NNB), where learners wrongly apply whole-number rules to decimals and fractions. This thesis asks whether the similarity is only on the surface, or whether the two systems share something deeper.
+
+To answer this, we mirror-replicate two published human studies (Desmet et al., 2010 and Alonso-Díaz et al., 2018) on seven LLMs without collecting any new human data, and add a new schema interference test set (D-SCHEMA) that targets bias unique to LLMs. We also run mechanistic analyses on Gemma-2-9B using linear probes, pre-trained sparse autoencoders from Gemma Scope, and activation patching. We report four main findings. First, LLM errors on decimal comparison fit cleanly into the six-class taxonomy used for children's errors, and each model can be matched to a specific grade level (Llama-3.2-3B behaves like a third grader, while GPT-4o and Claude 3.5 Sonnet are close to sixth-grade experts). Second, LLMs and humans differ in where the bias lives: humans show consistent bias on both decimals and ratios, while LLMs only show strong bias on decimals. This suggests LLM bias mostly comes from token-level symbol comparison rather than from a deeper confusion about magnitude. Third, the mechanistic probes directly capture schema competition inside the model. At layer 18 of Gemma-2-9B, our Schema Competition Index has a negative correlation of −0.61 with item accuracy, and patching activations at this layer flips 47\% of wrong answers.
+
+Together, the results show that LLM number bias has a structure that can be precisely described in the language of developmental psychology, but its underlying mechanism is not the same as the human one. We discuss what this means for theories of conceptual change, for interpretability methods, and for practical alignment work, and suggest that activation steering in middle layers may be a more controllable way to reduce such biases than prompt engineering or RLHF.
+
+\par \noindent \textbf{Key words:} natural number bias, large language models, mechanistic interpretability, decimal comparison, schema competition

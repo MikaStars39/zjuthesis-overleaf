@@ -1,0 +1,108 @@
+\cleardoublepage
+\chapter{外文原文}
+
+\section{Introduction: Cognitive Continuity vs. Symbolic Discreteness}
+
+In the intersection of cognitive science and AI, numerical proficiency is a core benchmark of intelligence. However, neither the neural networks of the human brain nor the Transformer-based artificial networks are flawless. Biases typically signal a system attempting to use low-dimensional “shortcuts” to solve high-dimensional problems.
+
+\subsection{Definition and Scope}
+
+Broadly, number bias occurs when an agent incorrectly activates a cognitive framework intended for one class of numbers (usually natural numbers) when facing another (rational numbers or probabilities).
+\begin{itemize}
+    \item Human Domain: Forcing properties of “Counting” (discreteness) onto “Measuring” (density).
+    \item Machine Domain: Forcing properties of “Text Sequences” (word frequency, versioning) onto “Mathematical Values.”
+\end{itemize}
+
+\subsection{Theoretical Framework: Dual-Process \& Predictive Coding}
+
+In psychology, Dual-Process Theory suggests that bias arises when the intuitive System 1 overrides the analytical System 2. In LLMs, this manifests when statistical probabilities of “Next-Token Prediction” (System 1 intuition) override the latent capacity for logical reasoning.
+
+\section{Developmental Psychology: Natural Number Bias (NNB)}
+
+The most prominent bias in mathematics education is Whole Number Bias (WNB), where learners use properties of positive integers to infer the nature of fractions and decimals.
+
+\subsection{The Origins: Conceptual Change Theory}
+
+Early mathematical experience is built on natural numbers, which possess specific “Core Attributes”:
+\begin{itemize}
+    \item Discreteness: Every number has a unique “successor.”
+    \item Magnitude Rules: Longer strings are larger; multiplication always increases value.
+\end{itemize}
+When transitioning to fractions, these rules fail. Rational numbers are dense (infinite values between any two points) and lack direct successors. Without “Conceptual Reorganization,” the old natural number schema creates interference.
+
+\subsection{Bias Mechanisms in Fractions}
+
+\begin{itemize}
+    \item Independent Component Processing: In “Incongruent” tasks, such as comparing 1/56 and 1/6, subjects often choose 1/56 because 56 > 6. This “Denominator Bias” reflects a failure to grasp the inverse relationship between the denominator and the fraction’s value.
+    \item Gap Reasoning: Subjects may view 2/3 and 5/6 as “closer” or “equal” because the additive difference between their numerators and denominators is the same, ignoring multiplicative ratios.
+\end{itemize}
+
+\subsection{The ``Length" Bias in Decimals}
+
+\begin{itemize}
+    \item Longer-is-Larger: Children often claim 0.25 > 0.8 because “25 is bigger than 8.” This is a direct projection of integer rules (where more digits always mean a higher value).
+    \item Shorter-is-Larger: Some students over-correct, assuming fewer decimal places always mean a larger value (e.g., choosing 0.4 over 0.37 for the wrong reasons).
+\end{itemize}
+
+\section{Linguistics: Numerical Bias in Natural Language}
+
+Language is the vehicle of numerical cognition. Linguistic structures and word frequencies shape our preferences.
+
+\subsection{Small Number Bias (SNB)}
+
+Humans do not generate random numbers uniformly; they exhibit a strong preference for smaller values.
+\begin{itemize}
+    \item Mental Number Line: Due to “Pseudoneglect” (a spatial attention bias toward the left), humans tend to “look left” on their internal number line, over-sampling smaller digits.
+    \item Frequency Effect: Zipf’s Law shows that the word “one” appears much more frequently than “nine” in almost all corpora. This statistical distribution reinforces cognitive familiarity with small numbers.
+\end{itemize}
+
+\subsection{Round Number Bias}
+
+Humans have an irrational preference for “Round Numbers” (multiples of 10, 5, or 2).
+\begin{itemize}
+    \item The Left-Digit Effect: Consumers focus disproportionately on the leftmost digit, which is why 9.99 is perceived as significantly cheaper than 10.00.
+    \item Pragmatics: In communication, round numbers signal “estimation,” while non-round numbers signal “precision”.
+\end{itemize}
+
+\section{Computational Linguistics: Numerical Bias in LLMs}
+
+Definition: Number Bias is a phenomenon where someone processes a numerical value by inappropriately applying a prior schema or rule-set that is inconsistent with the properties of that number. LLMs do not “calculate”; they perform “textual completion.” This leads to unique biases, most notably the “9.11 > 9.9” Paradox.
+
+With the explosion of LLM capabilities, academia has begun to focus on their limitations in arithmetic and logical reasoning. Early research focused on accuracy in multi-digit arithmetic, finding models relied on memory rather than algorithmic reasoning. Recent studies have delved into more subtle comparison tasks, with the “9.11 > 9.9” paradox sparking widespread discussion. Wallace et al. noted that LLMs exhibit significant inconsistency in numerical understanding and are easily susceptible to surface form interference.
+
+Current mainstream technical explanations focus on two dimensions. First is the structural defect of the Tokenizer. Modern LLMs universally use Byte-Pair Encoding (BPE) algorithms, which merge characters based on frequency, causing numbers to often be split into fragments lacking mathematical semantics. For instance, “9.11” might be split into “9” and “11”, while “9.9” is split into “9” and “9”. Since the model compares Token vectors in the embedding space, and Token “11” is indeed greater than Token “9” in an integer context, this physical splitting destroys the integrity of the place-value concept.
+
+Second is the conflict of semantic polysemy in training data. Research indicates that in data sources like GitHub repositories and software version logs, “.” is often used as a version separator rather than a decimal point. In software version semantics, v9.11 is indeed later (i.e., “greater”) than v9.9. Additionally, date formats (September 11 is later than September 9) and legal/religious texts (chapter indices) reinforce this sequence relationship. When facing ambiguous questions, the model may probabilistically prioritize activating the “Version Number Schema” or “Date Schema” over the “Decimal Math Schema.” Research using Predictive Concept Decoders by Huang et al. supports this hypothesis. Turpin et al.’s research further indicates that reasoning order significantly affects model hallucinations; models often generate conclusions before reasons, leading to “unfaithful” Chains of Thought.
+
+Despite existing studies, there is still a lack of large-scale benchmarks directly applying detailed psychological bias classifications to LLMs. The dynamic mechanism of internal “schema competition” has not been fully elucidated, and targeted error correction schemes based on cognitive psychology principles are lacking.
+
+\subsection{The Tokenizer Trap}
+
+LLMs see “Tokens,” not characters. Most models use Byte Pair Encoding (BPE):
+\begin{itemize}
+    \item 9.9 is often split into [9, ., 9].
+    \item 9.11 is often split into [9, ., 11].
+\end{itemize}
+In the model’s vector space, the token 11 carries a greater magnitude than the token 9. Because the “place value” (tenths vs. hundredths) is lost in the tokenization, the model defaults to a “longer-is-larger” or “integer-token-comparison” logic.
+
+\subsection{Training Data Distribution: Semantic Conflict}
+
+\begin{itemize}
+    \item Software Versioning (SemVer): In coding data (GitHub), version 9.11 follows 9.9. The model often activates this “versioning schema” rather than a “decimal schema”.
+    \item Contextual Priming: Legal or religious indices (e.g., John 9:11) and date formats (September 11th vs. September 9th) reinforce the sequence where 9.11 is “after” or “greater” than 9.9.
+\end{itemize}
+
+\section{Comparative Analysis}
+
+\subsection{The ``More is More" Heuristic}
+
+Both biological and electronic brains follow a primitive “More is More” heuristic. For humans, longer strings represent more resources; for models, larger token IDs or longer sequences correlate with “greater” semantic weight.
+
+\section{Conclusion}
+
+Number bias is a universal phenomenon across biological and non-biological intelligence.
+\begin{itemize}
+    \item Cognitive Science: NNB proves that math ability is not a “blank slate” but is built upon (and often hindered by) evolutionary core systems.
+    \item AI: LLM bias reveals the “Achilles’ heel” of the Transformer architecture in handling strict symbolic logic.
+\end{itemize}
+Future research should focus on Neuro-symbolic AI to combine the flexibility of neural networks with the precision of symbolic computation, creating models that don’t just “talk” like mathematicians but “think” like them.

@@ -1,0 +1,69 @@
+\section{Preliminaries}
+
+\subsection{Human Number Bias from the Perspective of Developmental Psychology}
+
+In mathematics education and cognitive psychology, a mature theoretical system regarding number bias has been established. Scholars such as Desmet, Grégoire, and Mussolin point out that number bias is the phenomenon where individuals inappropriately apply prior schemas or rule sets inconsistent with the attributes of the numerical information being processed6. The core concept is the Natural Number Bias, where learners tend to infer the properties of rational numbers (fractions and decimals) based on the attributes of natural numbers (positive integers).
+
+Conceptual Change Theory suggests that children's early mathematical experiences are built on natural numbers, forming core intuitions including "discreteness," "succession," and "longer is larger." When fraction and decimal concepts are introduced, the old natural number schemas cause strong interference because these numbers possess density and lack direct successors. Research by Alonso-Diaz et al. indicates that this bias exists not only in childhood but also persists in well-educated adults and even mathematics experts7. Even when experts provide correct answers, brain imaging studies show they still need to engage the prefrontal cortex for inhibitory control during incongruent tasks, with significantly longer reaction times compared to congruent tasks.
+
+Specifically regarding decimal cognition, researchers have categorized various erroneous schemas. The most prevalent is the "Longer-is-Larger" misconception, where subjects judge value based on the length of decimal digits (e.g., thinking 0.25 > 0.8), stemming directly from the transfer of integer comparison rules. Conversely, the "Shorter-is-Larger" bias stems from incorrect analogies to the denominator concept (fewer digits imply a smaller denominator and thus a larger value) or overgeneralization of the rule that tenths are greater than hundredths. Isotani et al. established a detailed taxonomy of decimal misconceptions, covering length bias, fraction bias, and zero bias\cite{roell2017}, providing a detailed behavioral comparison framework for analyzing LLM errors.
+
+\subsection{Relationship Between Number and Cognition from a Linguistic Perspective}
+
+Linguistic relativity (Sapir-Whorf hypothesis) has been partially verified in numerical cognition. Language structure, transparency of naming systems, and word frequency distributions in corpora profoundly shape numerical perception. Corpus linguistics research confirms that in human natural language, number word usage follows Zipf's Law: word frequency drops sharply as numerical value increases9. This distribution leads to a "Small Number Bias," where people overly favor smaller numbers when estimating or generating random numbers.
+
+Furthermore, humans exhibit an irrational preference for "Round Numbers" (multiples of 10, 5, 2) and assign them an "estimation" semantic function in pragmatics. regarding probability and distribution, although Benford's Law states that the number 1 appears most frequently as the leading digit in natural data, human subjective intuition of randomness tends toward a uniform distribution. This deviation from actual statistical laws is also a manifestation of number bias. These linguistic laws suggest that LLMs, trained on massive human texts, are highly likely to inherit and amplify cognitive biases embedded in the surface statistical features of human language10.
+
+\subsection{Research on Numerical Cognitive Deficits in Large Language Models}
+
+With the explosion of LLM capabilities, academia has begun to focus on their limitations in arithmetic and logical reasoning. Early research focused on accuracy in multi-digit arithmetic, finding models relied on memory rather than algorithmic reasoning. Recent studies have delved into more subtle comparison tasks, with the "9.11 > 9.9" paradox sparking widespread discussion. Wallace et al. noted that LLMs exhibit significant inconsistency in numerical understanding and are easily susceptible to surface form interference11.
+
+Current mainstream technical explanations focus on two dimensions. First is the structural defect of the Tokenizer. Modern LLMs universally use Byte-Pair Encoding (BPE) algorithms, which merge characters based on frequency, causing numbers to often be split into fragments lacking mathematical semantics. For instance, "9.11" might be split into "9" and "11", while "9.9" is split into "9" and "9". Since the model compares Token vectors in the embedding space, and Token "11" is indeed greater than Token "9" in an integer context, this physical splitting destroys the integrity of the place-value concept12.
+
+Second is the conflict of semantic polysemy in training data. Research indicates that in data sources like GitHub repositories and software version logs, "." is often used as a version separator rather than a decimal point. In software version semantics, v9.11 is indeed later (i.e., "greater") than v9.9. Additionally, date formats (September 11 is later than September 9) and legal/religious texts (chapter indices) reinforce this sequence relationship. When facing ambiguous questions, the model may probabilistically prioritize activating the "Version Number Schema" or "Date Schema" over the "Decimal Math Schema." Research using Predictive Concept Decoders by Huang et al. supports this hypothesis13. Xie's research further indicates that reasoning order significantly affects model hallucinations; models often generate conclusions before reasons, leading to "unfaithful" Chains of Thought14.
+
+Despite existing studies, there is still a lack of large-scale benchmarks directly applying detailed psychological bias classifications to LLMs. The dynamic mechanism of internal "schema competition" has not been fully elucidated, and targeted error correction schemes based on cognitive psychology principles are lacking.
+
+\section{Research Objectives and Main Content}
+
+\subsection{Research Objectives}
+
+This study aims to establish an interdisciplinary comparative analysis framework to systematically evaluate and parse numerical bias phenomena in LLMs. Specific objectives include: constructing a human-machine comparative test benchmark covering multiple psychological bias types; quantifying the degree of natural number bias in LLMs across different numerical tasks; utilizing interpretability techniques to explore the neural mechanisms underlying the model's bias; and proposing effective prompt engineering or fine-tuning strategies to correct model deviations based on these findings.
+
+\subsection{Main Research Content}
+
+This study will be divided into the following three main parts:
+
+Part 1: Behavioral Alignment Test of Digital Bias in Humans and LLMs.
+
+This part will reference classical experimental paradigms in developmental psychology to construct an evaluation dataset containing "Congruent Items" and "Incongruent Items". The dataset will cover dimensions such as decimal comparison, fraction comparison, and simple arithmetic judgment, specifically designed for error types in psychological classification, including length bias, denominator bias, and zero bias. We will select current mainstream open-source and closed-source models (e.g., GPT-4 series, Claude 3, Llama 3) as test subjects, recording their accuracy, error type distribution, and generated Chain-of-Thought (CoT) text. Simultaneously, we will utilize existing public psychological data or conduct small-scale human behavioral experiments to obtain human subject data on identical tasks. Through statistical analysis, we will compare the correlation between humans and AI in error patterns, reaction times (corresponding to reasoning steps or token generation latency for AI), and interference resistance, verifying whether LLMs reproduce human natural number bias at the behavioral level 15.
+
+Part 2: Mechanistic Interpretability Research on LLM Numerical Bias.
+
+Based on behavioral analysis, we will delve into the model's interior to investigate the computational mechanisms causing bias. The focus is to verify the "Schema Misuse" hypothesis. We will employ Mechanistic Interpretability tools such as Linear Probes or Predictive Concept Decoders (PCD) to analyze whether the intermediate layer activation states point to "mathematical value" concepts or "date," "software version," or "integer sequence" concepts when processing ambiguous numbers like "9.11". We will track the Attention Head distribution during erroneous answer generation to observe if the model overly focuses on the tail of the number (comparing 11 vs. 9) while ignoring high-order digits or the decimal point. Furthermore, we will analyze the specific impact of tokenization by comparing performance under mandatory character-level splitting (Digit-level) versus default BPE splitting to decouple the contributions of tokenizer defects and semantic understanding defects16.
+
+Part 3: Bias Mitigation and Intervention Strategies Based on Cognitive Perspectives. Based on the findings of the first two parts, we will explore methods to eliminate or mitigate numerical bias. We will design a "Data-Driven Pedagogy," treating the LLM as a "silicon-based student" and applying strategies used in human education to correct conceptual deviations. Specific schemes include: designing Adversarial Prompting to explicitly require the model to distinguish between mathematical and non-mathematical contexts; developing specialized Chain-of-Thought prompt templates to guide the model in bit-wise aligned comparison (e.g., padding 9.9 to 9.90); and constructing fine-tuning datasets containing Negative Examples to train the model to recognize and suppress intuitive errors. By comparing the effects of different interventions, we aim to propose a feasible solution for the industry17.
+
+\section{Research Methodology and Technical Route}
+
+\subsection{Research Methods}
+
+Literature Analysis: Extensively review literature in developmental psychology, cognitive science, computational linguistics, and AI to sort out definitions and classifications of Natural Number Bias and recent LLM progress.
+
+Experimental Research: Use the controlled variable method to design test cases. By varying surface features of numbers (length, common components, roundness) and context (math problems, code comments, date descriptions), observe changes in model output to establish causality.
+
+Comparative Analysis: Use statistical methods (Pearson correlation, Chi-square test) to quantify behavioral differences between human subjects and LLMs of different architectures and sizes on the same task set.
+
+Mechanism Detection: Utilize Mechanistic Interpretability tools (Logit Lens, Activation Patching) to directly observe model parameters and activation states, opening the "black box" for white-box analysis.
+
+\subsection{Technical Route}
+
+The technical route follows a closed loop of "Phenomenon Reproduction — Benchmark Construction — Mechanism Detection — Intervention Optimization."
+
+Data Preparation Phase: Based on psychological scales (e.g., Desmet et al.), write Python scripts to automatically generate massive numerical comparison test pairs labeled as "Congruent" or "Incongruent," adding interference items (e.g., version v9.11).
+
+Model Evaluation Phase: Use HuggingFace Transformers or APIs to conduct Zero-shot and Few-shot tests on base models. Collect Logits and generated explanations.
+
+Internal Detection Phase: Train simple linear classifiers (probes) to search for feature directions representing "magnitude," "length," or "date semantics" in the hidden states. Observe which feature directions are abnormally activated when errors occur.
+
+Intervention Verification Phase: Based on discovered error patterns, construct instruction fine-tuning data with "Error-Correction" pairs or design System Prompts containing "bit-wise comparison logic," and re-evaluate model performance to verify improvements 18.
